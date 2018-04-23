@@ -1,13 +1,13 @@
 import * as d3 from "d3";
 import "./directed-graph.css";
 
-var svg = d3.select('#DirectedGraph');
+var svg = d3.select('#directed_graph');
 
 d3.json('./node-n-links.json').then(function(graph) {
-    createV4SelectableForceDirectedGraph(svg, graph);
+    create_directed_graph(svg, graph);
 }); 
 
-function createV4SelectableForceDirectedGraph(svg, graph) {
+function create_directed_graph(svg, graph) {
     var width = +svg.attr("width"),
         height = +svg.attr("height");
 
@@ -36,12 +36,11 @@ function createV4SelectableForceDirectedGraph(svg, graph) {
 
     gMain.call(zoom);
 
-
     function zoomed() {
         gDraw.attr('transform', d3.event.transform);
     }
 
-    var color = d3.scaleOrdinal(d3.schemeCategory20);
+    var color = d3.scaleOrdinal(d3.schemeAccent);
 
     if (! ("links" in graph)) {
         console.log("Graph is missing links");
@@ -260,8 +259,8 @@ function createV4SelectableForceDirectedGraph(svg, graph) {
         })
     }
 
-    var texts = ['Use the scroll wheel to zoom',
-                 'Hold the shift key to select nodes']
+    var texts = ['',
+                 '']
 
     svg.selectAll('text')
         .data(texts)

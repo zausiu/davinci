@@ -1,10 +1,10 @@
-#d3_selectable_force_directed_graph svg {
+#directed_graph svg {
     border: 1px solid;
     font: 13px sans-serif;
     text-anchor: end;
 }
 
-#d3_selectable_force_directed_graph .node {
+#directed_graph_node .node {
   stroke: #fff;
   stroke-width: 1.5px;
 }
