@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-
 <html lang="en">
     <head>
+	      <title>图示例 Directed Graph</title>
           <meta charset="utf-8" />
           <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     </head>
@@ -11,22 +11,13 @@
             <svg />
         </div>
 
-        <link rel='stylesheet' href='d3v4-selectable-zoomable-force-directed-graph.css'>
-        <script src="d3.v4.js"></script>
-        <script src="d3v4-brush-lite.js"></script>
-        <script src="d3v4-selectable-force-directed-graph.js"></script>
+        <div>
+            <p>用于可视化社交关系的图示例. Powered by d3.js</p>
+            <p>
+                <a href="http://www.miitbeian.gov.cn" target="_">粤ICP备18043099号</a>
+            </p>
+    	</div>
 
-        <script>
-            var svg = d3.select('#d3_selectable_force_directed_graph');
-            d3.json('node-n-links.json', function(error, graph) {
-                if (!error) {
-                    //console.log('graph', graph);
-                    createV4SelectableForceDirectedGraph(svg, graph);
-                } else {
-                    console.error(error);
-                }
-            });
-        </script>
    </body>
 
 </html>
