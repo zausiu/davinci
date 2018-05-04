@@ -1,5 +1,6 @@
 import * as d3 from "d3";
 import "./directed-graph.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 var svg = d3.select('#directed_graph');
 

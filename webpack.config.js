@@ -6,8 +6,8 @@ module.exports = {
         filename: 'bundle.js',
         path: path.resolve(__dirname, 'dist')
 },
-    mode: 'production',
-//    mode: 'development',
+     mode: 'production',
+  //  mode: 'development',
     module: {
         rules: [
               {
@@ -16,7 +16,7 @@ module.exports = {
                            'style-loader',
                            'css-loader'
                          ]
-               }
+             }
        ]
    }
 };

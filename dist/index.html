@@ -1,23 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-	      <title>图示例 Directed Graph</title>
-          <meta charset="utf-8" />
-          <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>图示例_Directed Graph</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     </head>
 
     <body>
-        <div align='center' id="d3_selectable_force_directed_graph" style="width: 960px; height: 500px; margin: auto; margin-bottom: 12px">
-            <svg />
+        <div class="container">
+            <div class="row">
+                <div class="col-10" align='center' id="directed_graph" style="width: 960px; height: 500px; margin: auto; margin-bottom: 12px">
+                    <svg />
+                </div>
+                <div class="col-2">
+                    col-9
+                </div>
+            </div>
+
+            <div class="row">
+                <p class="col-auto"> <a href="http://www.miitbeian.gov.cn" target="_">粤ICP备18043099号</a> </p>
+                <p class="col-auto">用于可视化社交关系的图示例. Powered by d3.js</p>
+                <!-- <p class="w-100"> -->
+            </div>
+
         </div>
 
-        <div>
-            <p>用于可视化社交关系的图示例. Powered by d3.js</p>
-            <p>
-                <a href="http://www.miitbeian.gov.cn" target="_">粤ICP备18043099号</a>
-            </p>
-    	</div>
+        <script src="bundle.js"></script>
 
-   </body>
+    </body>
 
 </html>
