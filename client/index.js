@@ -1,4 +1,5 @@
 import * as d3 from "d3";
+import { draw_nodes } from "./penman";
 import "./directed-graph.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -36,8 +37,6 @@ function create_directed_graph(svg, graph) {
         gDraw.attr('transform', d3.event.transform);
     }
 
-    var color = d3.scaleOrdinal(d3.schemeAccent);
-
     if (! ("links" in graph)) {
         console.log("Graph is missing links");
         return;
@@ -57,19 +56,7 @@ function create_directed_graph(svg, graph) {
         .enter().append("line")
         .attr("stroke-width", function(d) { return Math.sqrt(d.value); });
 
-    var node = gDraw.append("g")
-        .attr("class", "node")
-        .selectAll("circle")
-        .data(graph.nodes)
-        .enter().append("circle")
-        .attr("r", 5)
-        .attr("fill", function(d) { 
-            if ('color' in d)
-                return d.color;
-            else
-                return color(d.group); 
-        })
-        .on("mouseover", (d) => {
+    var node = draw_nodes(gDraw, graph.nodes).on("mouseover", (d) => {
             // d3.select('#blurb').text(`id: ${d.id}`);
             let text = JSON.stringify(d)
             text = text.replace(/(?:\r\n|\r|\n|,)/g, '<br/>');
