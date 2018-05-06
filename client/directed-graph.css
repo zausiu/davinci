@@ -1,6 +1,6 @@
-#directed_graph svg {
+#directed_graph {
     border: 1px solid;
-    font: 13px sans-serif;
+    font: 13px;
     text-anchor: end;
 }
 

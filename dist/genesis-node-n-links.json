@@ -1,0 +1,12 @@
+{
+  "nodes": [
+    {"id": "aa", "group": 1, "type": "circle"},
+    {"id": "bb", "group": 1, "type": "circle"},
+    {"id": "cc", "group": 2, "type": "square"},
+    {"id": "dd", "group": 2, "type": "triangle"}
+  ],
+  "links": [
+    {"source": "aa", "target": "bb", "value": 1},
+    {"source": "cc", "target": "bb", "value": 1}
+  ]
+}

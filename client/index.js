@@ -4,26 +4,20 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 var svg = d3.select('#directed_graph');
 
-d3.json('./node-n-links.json').then(function(graph) {
+d3.json('./genesis-node-n-links.json').then(function(graph) {
     create_directed_graph(svg, graph);
 }); 
 
 function create_directed_graph(svg, graph) {
-    var width = +svg.attr("width"),
-        height = +svg.attr("height");
-
-    var svg = d3.select('svg')
     let parentWidth = svg.node().parentNode.clientWidth;
     let parentHeight = svg.node().parentNode.clientHeight;
 	
-    svg.attr('width', parentWidth)
-    .attr('height', parentHeight)
+    svg.attr('width', parentWidth).attr('height', parentHeight)
 
     // remove any previous graphs
     svg.selectAll('.g-main').remove();
 
-    var gMain = svg.append('g')
-    .classed('g-main', true);
+    var gMain = svg.append('g').classed('g-main', true);
 
     var rect = gMain.append('rect')
     .attr('width', parentWidth)
@@ -79,6 +73,14 @@ function create_directed_graph(svg, graph) {
                 return d.color;
             else
                 return color(d.group); 
+        })
+        .on("mouseover", (d) => {
+            // d3.select('#blurb').text(`id: ${d.id}`);
+            let text = JSON.stringify(d)
+            text = text.replace(/(?:\r\n|\r|\n|,)/g, '<br/>');
+            text = text.replace(/(?:")/g, '');
+            text = text.substring(1, text.length - 2);
+            d3.select('#blurb').html(text);
         })
         .call(d3.drag()
         .on("start", dragstarted)
