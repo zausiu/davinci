@@ -50,11 +50,6 @@ function create_directed_graph(svg, graph) {
         graph.nodes[i].weight = 1.01;
     }
 
-    // the brush needs to go before the nodes so that it doesn't
-    // get called when the mouse is over a node
-    var gBrushHolder = gDraw.append('g');
-    var gBrush = null;
-
     var link = gDraw.append("g")
         .attr("class", "link")
         .selectAll("line")
