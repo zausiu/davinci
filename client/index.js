@@ -114,8 +114,7 @@ function create_directed_graph(svg, graph) {
             .attr("x2", function(d) { return d.target.x; })
             .attr("y2", function(d) { return d.target.y; });
 
-        node.attr("cx", function(d) { return d.x; })
-            .attr("cy", function(d) { return d.y; });
+        node.attr("transform", d => `translate(${d.x}, ${d.y})`);
     }
 
     function dragstarted(d) {
