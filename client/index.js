@@ -1,15 +1,19 @@
 import * as d3 from "d3";
 import { draw_nodes } from "./penman";
+import { Controller } from "./controller";
 import "./directed-graph.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 var svg = d3.select('#directed_graph');
-
-d3.json('./genesis-node-n-links.json').then(function(graph) {
-    create_directed_graph(svg, graph);
+d3.json('./genesis-node-n-links2.json').then(function(raw_data) {
+    let ctrl = new Controller(raw_data);
+    create_directed_graph(svg, raw_data, ctrl);
 }); 
 
-function create_directed_graph(svg, graph) {
+function create_directed_graph(svg, graph, ctrl) 
+{
+    d3.select('#caption').text(ctrl.get_caption());
+
     let parentWidth = svg.node().parentNode.clientWidth;
     let parentHeight = svg.node().parentNode.clientHeight;
 	
@@ -87,7 +91,7 @@ function create_directed_graph(svg, graph) {
                     return d.id; 
                 })
                 .distance(function(d) { 
-                    return 30;
+                    return 70;
                     var dist = 20 / d.value;
                     console.log('dist:', dist);
 
@@ -156,15 +160,17 @@ function create_directed_graph(svg, graph) {
         })
     }
 
-    var texts = ['',
-                 '']
-
+    var current_day = ctrl.get_current_day()[1];
+    console.log(current_day);
+    var texts = [current_day,
+                 ''];
     svg.selectAll('text')
         .data(texts)
         .enter()
         .append('text')
-        .attr('x', 900)
-        .attr('y', function(d,i) { return 470 + i * 18; })
+        .attr('x', '6em')
+        .attr('y', '1em')
+        .attr('font-size', '55')
         .text(function(d) { return d; });
 
     return graph;

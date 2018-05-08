@@ -1,14 +1,32 @@
 {
+  "start_day": "2018-05-01",
+  "end_day": "2018-05-05",
   "nodes": [
-    {"id": "aa", "group": 1, "type": "circle"},
-    {"id": "bb", "group": 1, "type": "circle"},
-    {"id": "cc", "group": 2, "type": "diamond"},
-    {"id": "dd", "group": 2, "type": "square"},
-    {"id": "ee", "group": 2, "type": "star"},
-    {"id": "ff", "group": 2, "type": "triangle"}
+    {"id": "aa", "group": 1, "type": "circle", "day": "2018-05-01"},
+    {"id": "bb", "group": 1, "type": "circle", "day": "2018-05-01"},
+    {"id": "cc", "group": 2, "type": "diamond", "day": "2018-05-01"},
+    {"id": "dd", "group": 2, "type": "square", "day": "2018-05-02"},
+    {"id": "ee", "group": 3, "type": "star", "day": "2018-05-03"},
+    {"id": "ff", "group": 4, "type": "triangle", "day": "2018-05-03"},
+    {"id": "gg", "group": 4, "type": "circle", "day": "2018-05-03"},
+    {"id": "hh", "group": 5, "type": "circle", "day": "2018-05-03"},
+    {"id": "ii", "group": 5, "type": "star", "day": "2018-05-03"},
+    {"id": "jj", "group": 5, "type": "star", "day": "2018-05-04"},
+    {"id": "kk", "group": 6, "type": "star", "day": "2018-05-05"},
+    {"id": "ll", "group": 6, "type": "triangle", "day": "2018-05-05"}
   ],
   "links": [
     {"source": "aa", "target": "bb", "value": 1},
-    {"source": "cc", "target": "bb", "value": 1}
+    {"source": "cc", "target": "bb", "value": 1},
+    {"source": "aa", "target": "cc", "value": 1},
+    {"source": "cc", "target": "dd", "value": 1},
+    {"source": "cc", "target": "ll", "value": 1},
+    {"source": "dd", "target": "jj", "value": 1},
+    {"source": "ee", "target": "dd", "value": 1},
+    {"source": "dd", "target": "ff", "value": 1},
+    {"source": "gg", "target": "hh", "value": 1},
+    {"source": "gg", "target": "bb", "value": 1},
+    {"source": "hh", "target": "ii", "value": 1},
+    {"source": "jj", "target": "kk", "value": 1}
   ]
 }
