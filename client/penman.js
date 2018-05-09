@@ -1,6 +1,7 @@
 import * as d3 from "d3";
+import * as _ from "lodash";
 
-export function draw_nodes(g, nodes)
+export function draw_nodes(g, nodes, ctrl)
 {
     // console.log(`nodes are: ${nodes}`)
 
@@ -27,7 +28,19 @@ export function draw_nodes(g, nodes)
             .enter()
             .append("path")
             .attr("d", d => generator_map[d.type]())
-            .attr("fill", d => color(d.group));
+            .attr("fill", d => {
+                let date = d3.isoParse(d.day);
+                let current_date = ctrl.get_current_day();
+                console.log("%o %o", d.day, current_date[1]);
+                if (_.isEqual(date, current_date[0]))
+                {
+                    return color(d.group);
+                }
+                else
+                {
+                    return d3.color("black");
+                }
+            });
 
     return node;
 }

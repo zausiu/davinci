@@ -7,12 +7,31 @@ import "bootstrap/dist/css/bootstrap.min.css";
 var svg = d3.select('#directed_graph');
 d3.json('./genesis-node-n-links2.json').then(function(raw_data) {
     let ctrl = new Controller(raw_data);
-    create_directed_graph(svg, raw_data, ctrl);
+
+    create_directed_graph(svg, ctrl);
+    set_button_handlers(svg, ctrl);
 }); 
 
-function create_directed_graph(svg, graph, ctrl) 
+function set_button_handlers(svg, ctrl)
+{
+    let prev_btn = d3.select("#prev_day");
+    prev_btn.on("click", () => {
+        ctrl.goto_prev_day();
+        create_directed_graph(svg, ctrl);
+    });
+
+    let next_btn = d3.select("#next_day");
+    next_btn.on("click", () => {
+        ctrl.goto_next_day()
+        create_directed_graph(svg, ctrl);
+    });
+}
+
+function create_directed_graph(svg, ctrl, debug) 
 {
     d3.select('#caption').text(ctrl.get_caption());
+
+    let graph = ctrl.get_graph();
 
     let parentWidth = svg.node().parentNode.clientWidth;
     let parentHeight = svg.node().parentNode.clientHeight;
@@ -20,7 +39,12 @@ function create_directed_graph(svg, graph, ctrl)
     svg.attr('width', parentWidth).attr('height', parentHeight)
 
     // remove any previous graphs
-    svg.selectAll('.g-main').remove();
+    let r = svg.selectAll('.g-main line').remove();
+    r = svg.selectAll('.g-main path').remove();
+    r = svg.selectAll('.g-main g').remove();
+    r = svg.selectAll('.g-main rect').remove();
+    r = svg.selectAll('.g-main .link').remove();
+    r = svg.selectAll('.g-main').remove();
 
     var gMain = svg.append('g').classed('g-main', true);
 
@@ -59,8 +83,9 @@ function create_directed_graph(svg, graph, ctrl)
         .data(graph.links)
         .enter().append("line")
         .attr("stroke-width", function(d) { return Math.sqrt(d.value); });
+    // console.log("link: %o", graph.links);
 
-    var node = draw_nodes(gDraw, graph.nodes).on("mouseover", (d) => {
+    var node = draw_nodes(gDraw, graph.nodes, ctrl).on("mouseover", (d) => {
             // d3.select('#blurb').text(`id: ${d.id}`);
             let text = JSON.stringify(d)
             text = text.replace(/(?:\r\n|\r|\n|,)/g, '<br/>');
@@ -161,14 +186,15 @@ function create_directed_graph(svg, graph, ctrl)
     }
 
     var current_day = ctrl.get_current_day()[1];
-    console.log(current_day);
+    // console.log(current_day);
     var texts = [current_day,
                  ''];
+    svg.selectAll('text').remove();
     svg.selectAll('text')
         .data(texts)
         .enter()
         .append('text')
-        .attr('x', '6em')
+        .attr('x', '5.4em')
         .attr('y', '1em')
         .attr('font-size', '55')
         .text(function(d) { return d; });

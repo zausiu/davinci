@@ -1,4 +1,5 @@
 import * as d3 from "d3";
+import * as _ from "lodash";
 
 export class Controller
 {
@@ -31,21 +32,78 @@ export class Controller
 
     get_next_day()
     {
-        if (this.current_date == this.end_date)
+        if (_.isEqual(this.current_date, this.end_date))
             return null;
 
-        next_day = d3.timeDay.offset(this.current_date, 1);
+        let next_day = d3.timeDay.offset(this.current_date, 1);
 
         return [next_day, this.formatter(next_day)];
     }
 
-    get_prev_day()
+    goto_next_day()
     {
-        if (this.current_date == this.start_date)
+        let n = this.get_next_day();
+        if (n === null)
             return null;
 
-        prev_day = d3.timeDay.offset(this.current_date, -1);
+        this.current_date = n[0];
+        return n;
+    }
+
+    get_prev_day()
+    {
+        if (_.isEqual(this.current_date, this.start_date))
+            return null;
+
+        let prev_day = d3.timeDay.offset(this.current_date, -1);
 
         return [prev_day, this.formatter(prev_day)];
+    }
+
+    goto_prev_day()
+    {
+        let p = this.get_prev_day();
+        if (p === null)
+            return null;
+
+        this.current_date = p[0];
+        return p;
+    }
+
+    get_graph()
+    {
+        let unique_ids = new Set();
+        let filtered_nodes = [];
+        let all_nodes = this.raw_data.nodes;
+        for (let i = 0; i < all_nodes.length; i++)
+        {
+            let node = all_nodes[i];
+            let date = d3.isoParse(node['day']);
+            if (date < this.start_date || date > this.current_date)
+                continue;
+
+            filtered_nodes.push(node);
+            unique_ids.add(node.id);
+        }
+
+        let filtered_links = [];
+        let all_links = this.raw_data.links;
+        // console.log("unique_ids: %o", unique_ids);
+        // console.log("all_links: %o", all_links);
+        for (let i = 0; i < all_links.length; i++)
+        {
+            let link = all_links[i];
+            let source = link.source;
+            let target = link.target;
+            if ((unique_ids.has(source) && unique_ids.has(target)) 
+                || (unique_ids.has(source.id) && unique_ids.has(target.id)))
+            {
+                filtered_links.push(link);
+            }
+        }
+
+        let graph = { nodes: filtered_nodes, links: filtered_links };
+
+        return graph;
     }
 }

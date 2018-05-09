@@ -2,7 +2,7 @@
   "start_day": "2018-05-01",
   "end_day": "2018-05-05",
   "nodes": [
-    {"id": "aa", "group": 1, "type": "circle", "day": "2018-05-01"},
+    {"id": "aa", "group": 0, "type": "circle", "day": "2018-05-01"},
     {"id": "bb", "group": 1, "type": "circle", "day": "2018-05-01"},
     {"id": "cc", "group": 2, "type": "diamond", "day": "2018-05-01"},
     {"id": "dd", "group": 2, "type": "square", "day": "2018-05-02"},
