@@ -1,9 +1,14 @@
-import * as d3 from "d3";
-import { draw_nodes } from "./penman";
-import { Controller } from "./controller";
-import "./directed-graph.css";
-import "bootstrap/dist/css/bootstrap.min.css";
+import * as d3 from "d3"
+import { draw_nodes } from "./penman"
+import { Controller } from "./controller"
+import store from "./store"
+import { retrieveDataFromSvr } from "./actions"
+import "./directed-graph.css"
+import "bootstrap/dist/css/bootstrap.min.css"
 
+store.dispatch(retrieveDataFromSvr())
+
+/*
 var svg = d3.select('#directed_graph');
 d3.json('./genesis-node-n-links2.json').then(function(raw_data) {
     let ctrl = new Controller(raw_data);
@@ -11,6 +16,7 @@ d3.json('./genesis-node-n-links2.json').then(function(raw_data) {
     create_directed_graph(svg, ctrl);
     set_button_handlers(svg, ctrl);
 }); 
+*/
 
 function set_button_handlers(svg, ctrl)
 {
