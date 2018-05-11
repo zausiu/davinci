@@ -1,18 +1,19 @@
 import * as d3 from "d3"
 import * as _ from "lodash"
+import store from './store'
 
-export function draw_nodes(g, nodes, ctrl)
+export function draw_nodes(g, nodes)
 {
     // console.log(`nodes are: ${nodes}`)
 
-    let color = d3.scaleOrdinal(d3.schemeAccent);
+    let color = d3.scaleOrdinal(d3.schemeAccent)
 
-    const sz = 250;
-    let circle = d3.symbol().type(d3.symbolCircle).size(sz);
-    let diamond = d3.symbol().type(d3.symbolDiamond).size(sz);
-    let square = d3.symbol().type(d3.symbolSquare).size(sz);
-    let star = d3.symbol().type(d3.symbolStar).size(sz);
-    let triangle = d3.symbol().type(d3.symbolTriangle).size(sz);
+    const sz = 250
+    let circle = d3.symbol().type(d3.symbolCircle).size(sz)
+    let diamond = d3.symbol().type(d3.symbolDiamond).size(sz)
+    let square = d3.symbol().type(d3.symbolSquare).size(sz)
+    let star = d3.symbol().type(d3.symbolStar).size(sz)
+    let triangle = d3.symbol().type(d3.symbolTriangle).size(sz)
 
     let generator_map = {
         circle: circle,
@@ -20,8 +21,9 @@ export function draw_nodes(g, nodes, ctrl)
         square: square,
         star: star,
         triangle: triangle
-    };
+    }
 
+    let current_date = store.getState().graph.current_date
     let node = g.append("g").attr("class", "node")
             .selectAll("path")
             .data(nodes)
@@ -29,10 +31,8 @@ export function draw_nodes(g, nodes, ctrl)
             .append("path")
             .attr("d", d => generator_map[d.type]())
             .attr("fill", d => {
-                let date = d3.isoParse(d.day);
-                let current_date = ctrl.get_current_day();
-                console.log("%o %o", d.day, current_date[1]);
-                if (_.isEqual(date, current_date[0]))
+                let date = d3.isoParse(d.day)
+                if (_.isEqual(date, current_date))
                 {
                     return color(d.group);
                 }
@@ -40,7 +40,7 @@ export function draw_nodes(g, nodes, ctrl)
                 {
                     return d3.color("black");
                 }
-            });
+            })
 
-    return node;
+    return node
 }

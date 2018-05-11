@@ -1,43 +1,35 @@
-import * as d3 from "d3"
-import { draw_nodes } from "./penman"
-import { Controller } from "./controller"
-import store from "./store"
-import { retrieveDataFromSvr } from "./actions"
-import "./directed-graph.css"
-import "bootstrap/dist/css/bootstrap.min.css"
+import * as d3 from 'd3'
+import { draw_nodes } from './penman'
+import store from './store'
+import { retrieveDataFromSvr, forwardGraph, rewindGraph } from './actions'
+import { filter_graph } from './cook'
+import './directed-graph.css'
+import 'bootstrap/dist/css/bootstrap.min.css'
 
-store.dispatch(retrieveDataFromSvr())
+var svg = d3.select('#directed_graph')
+set_button_handlers(svg)
+store.dispatch(retrieveDataFromSvr(() => create_directed_graph(svg)))
 
-/*
-var svg = d3.select('#directed_graph');
-d3.json('./genesis-node-n-links2.json').then(function(raw_data) {
-    let ctrl = new Controller(raw_data);
-
-    create_directed_graph(svg, ctrl);
-    set_button_handlers(svg, ctrl);
-}); 
-*/
-
-function set_button_handlers(svg, ctrl)
+function set_button_handlers(svg)
 {
     let prev_btn = d3.select("#prev_day");
     prev_btn.on("click", () => {
-        ctrl.goto_prev_day();
-        create_directed_graph(svg, ctrl);
+        store.dispatch(rewindGraph())
+        create_directed_graph(svg);
     });
 
     let next_btn = d3.select("#next_day");
     next_btn.on("click", () => {
-        ctrl.goto_next_day()
-        create_directed_graph(svg, ctrl);
+        store.dispatch(forwardGraph())
+        create_directed_graph(svg);
     });
 }
 
-function create_directed_graph(svg, ctrl, debug) 
+function create_directed_graph(svg) 
 {
-    d3.select('#caption').text(ctrl.get_caption());
-
-    let graph = ctrl.get_graph();
+    // console.log("store state: %o", store.getState())
+    let graph = filter_graph(store.getState().graph)
+    d3.select('#caption').text(graph.caption);
 
     let parentWidth = svg.node().parentNode.clientWidth;
     let parentHeight = svg.node().parentNode.clientHeight;
@@ -91,7 +83,7 @@ function create_directed_graph(svg, ctrl, debug)
         .attr("stroke-width", function(d) { return Math.sqrt(d.value); });
     // console.log("link: %o", graph.links);
 
-    var node = draw_nodes(gDraw, graph.nodes, ctrl).on("mouseover", (d) => {
+    var node = draw_nodes(gDraw, graph.nodes).on("mouseover", (d) => {
             // d3.select('#blurb').text(`id: ${d.id}`);
             let text = JSON.stringify(d)
             text = text.replace(/(?:\r\n|\r|\n|,)/g, '<br/>');
@@ -191,7 +183,7 @@ function create_directed_graph(svg, ctrl, debug)
         })
     }
 
-    var current_day = ctrl.get_current_day()[1];
+    var current_day = graph.current_day
     // console.log(current_day);
     var texts = [current_day,
                  ''];

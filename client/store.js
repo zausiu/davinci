@@ -12,4 +12,5 @@ const store = createStore(
           loggerMiddleware // neat middleware that logs actions
       )
 )
+
 export default store
