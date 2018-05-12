@@ -5,7 +5,8 @@
   "main": "./client/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack"
+    "build": "webpack --mode=production",
+    "dbuild": "webpack --mode=development"
   },
   "repository": {
     "type": "git",
@@ -27,6 +28,7 @@
     "curry": "^1.2.0",
     "d3": "^5.0.0",
     "d3-force": "^1.1.0",
+    "http": "0.0.0",
     "immutable": "^3.8.2",
     "jquery": "^3.3.1",
     "lodash": "^4.17.10",
@@ -34,7 +36,9 @@
     "popper.js": "^1.14.3",
     "redux": "^4.0.0",
     "redux-logger": "^3.0.6",
-    "redux-thunk": "^2.2.0"
+    "redux-thunk": "^2.2.0",
+    "socket.io": "^2.1.0",
+    "socket.io-json-parser": "^2.1.0"
   },
   "devDependencies": {
     "css-loader": "^0.28.11",
