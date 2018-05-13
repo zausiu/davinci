@@ -15,7 +15,7 @@ const socket = SocketIO(window.location.hostname, {
     path: `${window.location.pathname}socket.io`,
     reconnection: true,
     reconnectionAttempts: 3,
-    parser
+    // parser
 }) 
 
 export const retrieveDataFromSvr = (night_watcher) => (dispatch) => {
@@ -23,8 +23,10 @@ export const retrieveDataFromSvr = (night_watcher) => (dispatch) => {
         dispatch(updateGraph(raw_data))
         night_watcher()
     })*/
-    socket.emit('graph', {day='2018-05-12'}, (graph) {
-        console.log(graph)
+    socket.emit('graph', {day: '2018-05-12'}, (graph) => {
+        console.log("%s %o", typeof graph, graph)
+        dispatch(updateGraph(graph))
+        night_watcher()
     })
 }
 
